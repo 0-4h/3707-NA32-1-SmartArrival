@@ -1,0 +1,3 @@
+DHT sensor library@1.4.6
+Adafruit Unified Sensor@1.1.15
+PubSubClient@2.8

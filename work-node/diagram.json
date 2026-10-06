@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "author": "Persicaria_L",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -9.6, "left": 110.44, "attrs": {} },
+    {
+      "type": "wokwi-pir-motion-sensor",
+      "id": "pir1",
+      "top": 136.68,
+      "left": -81.9,
+      "rotate": 270,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw1",
+      "top": 49.8,
+      "left": -22.9,
+      "rotate": 270,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-pushbutton-6mm",
+      "id": "btn1",
+      "top": 10.6,
+      "left": 42.4,
+      "rotate": 90,
+      "attrs": { "color": "green", "xray": "1" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text1",
+      "top": -38.4,
+      "left": -38.4,
+      "attrs": { "text": "Simulation button\n(simulate leaving event)" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text2",
+      "top": 28.8,
+      "left": -297.6,
+      "attrs": {
+        "text": "Simulation Bypass switch\non = simulate continues movement\noff = actural PIR online"
+      }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "pir1:VCC", "esp:5V", "red", [ "h0" ] ],
+    [ "pir1:GND", "esp:GND.1", "black", [ "h9.6", "v-28.54" ] ],
+    [ "pir1:OUT", "esp:27", "green", [ "h28.8", "v-67.06" ] ],
+    [ "sw1:1", "esp:GND.1", "black", [ "v0" ] ],
+    [ "sw1:2", "esp:26", "green", [ "h28.8", "v38.3" ] ],
+    [ "esp:25", "btn1:1.l", "green", [ "v0", "h-38.25", "v-86.4" ] ],
+    [ "btn1:2.r", "esp:GND.1", "black", [ "v106.4", "h-0.4" ] ]
+  ],
+  "dependencies": {}
+}
