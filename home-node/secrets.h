@@ -2,7 +2,7 @@
 #define WIFI_SSID "Wokwi-GUEST"
 #define WIFI_PASSWORD ""
 #define AIO_USERNAME "feijichang2873"
-#define AIO_KEY "aio_gdxt12B4Cp3TeuSDsQuVJfvGJFeN"
+#define AIO_KEY "aio_VMNL96viaLYUvhXdYfE6dmlsFx33"
 #define NTFY_URL "https://ntfy.sh/3707na32-1_NTFY_Message_server"
 
 
