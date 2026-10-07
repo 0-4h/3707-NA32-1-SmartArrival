@@ -147,8 +147,6 @@ class Controller {
       if (temperature > 26) ac = true;
       else if (temperature < 22) ac = false;
       if (acMode != -1) ac = acMode == 1;
-      // Local arrival prevents AC output during its first second, including a manual on request.
-      if (elapsed(now, arrivedAt) < 1000) ac = false;
     }
     if (active()) state = ac ? State::COMFORT : State::ARRIVAL;
     if (lightMode != -1) light = lightMode == 1;
