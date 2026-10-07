@@ -109,15 +109,30 @@ void loop() {
     bool enabled = workingDay && local.tm_hour * 60 + local.tm_min >= WORK_END_MINUTE;
     uint32_t day = validClock ? (local.tm_year + 1900) * 10000 + (local.tm_mon + 1) * 100 + local.tm_mday : 0;
     if (detector.sample(motion, enabled, day, now, IDLE_SECONDS * 1000)) {
-      // The detector has already used its daily trigger. A storage or queue failure does not retry that normal trigger during this run.
-      // Save the date before sending to prevent another trigger after reboot; skip sending if saving fails.
+      // Save the date before sending. Do not send if storage fails.
       if (!dayStoreReady || dayStore.putUInt("day", day) != sizeof(uint32_t)) {
         Serial.println("DAY_STORE_ERROR");
       } else {
         Departure value{(uint32_t)epoch, false};
-        if (xQueueSend(departures, &value, 0) != pdTRUE) Serial.println("WORK_QUEUE_FULL");
-        else Serial.println("WORK_IDLE_QUEUED");
+        if (xQueueSend(departures, &value, 0) != pdTRUE) {
+          Serial.println("WORK_QUEUE_FULL");
+        } else {
+          Serial.println("WORK_IDLE_QUEUED");
+        }
       }
+    }
+
+    // Show the timer once per second.
+    static uint32_t logAt = 0;
+    if (now - logAt >= 1000) {
+      logAt = now;
+      Serial.printf(
+        "enabled=%d bypass=%d motion=%d idle_ms=%lu\n",
+        enabled,
+        forcedMotion,
+        motion,
+        (unsigned long)detector.idleElapsedMs(now)
+      );
     }
   }
   vTaskDelay(pdMS_TO_TICKS(5));
