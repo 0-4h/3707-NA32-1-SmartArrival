@@ -31,6 +31,11 @@ inline bool parseEvent(const char* text, size_t length, uint32_t& epoch, bool* t
 class DeskIdleDetector {
  public:
   // Generate one event per date; firmware persists the date in nonvolatile storage.
+  // line 34-36 return current idle time
+  uint32_t idleElapsedMs(uint32_t now) const {
+    return tracking ? now - quietAt : 0;
+  }
+  
   uint32_t firedDay = 0;
   bool sample(bool motion, bool enabled, uint32_t day, uint32_t now, uint32_t idleMs) {
     // Normal events only: reset the quiet interval when disabled, on a new date, or after a sample gap greater than one second. Motion also resets it.
